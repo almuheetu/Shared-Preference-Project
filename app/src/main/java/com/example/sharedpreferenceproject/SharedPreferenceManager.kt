@@ -4,24 +4,25 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class SharedPreferenceManager(context: Context) {
+
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
-    fun save(key: String, value: Int) {
+    fun save(count: Count) {
         val editor = sharedPreferences.edit()
-        editor.putInt(key, value)
+        editor.putInt("count", count.counter)
         editor.apply()
     }
 
-    fun read(key: String): Int {
-        return sharedPreferences.getInt(key, 0)
+    fun read(): Count {
+        val count = sharedPreferences.getInt("count", 0)
+        return Count(count)
     }
 
-    fun clear(key: String) {
+    fun clear() {
         val editor = sharedPreferences.edit()
-        editor.remove(key)
+        editor.clear()
         editor.apply()
     }
-
 }
 
