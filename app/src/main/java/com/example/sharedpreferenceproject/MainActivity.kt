@@ -19,8 +19,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.countBtn.setOnClickListener {
             val currentCount = sharedPreferenceManager.read()
-            val newCount = Count(currentCount.counter + 1)
-            sharedPreferenceManager.save(newCount)
+            if (currentCount != null) {
+                sharedPreferenceManager.save(Count(currentCount.counter + 1))
+            } else {
+                sharedPreferenceManager.save(Count(1))
+            }
             updateResult()
         }
 
@@ -32,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateResult() {
         val count = sharedPreferenceManager.read()
-        binding.textViewResult.text = "Result: ${count.counter}"
+        binding.textViewResult.text = "Result: ${count?.counter ?: 0}"
     }
 }
 
